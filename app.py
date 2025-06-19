@@ -76,7 +76,8 @@ if "results" in st.session_state:
 
     # เช็ค front
     front_count = sum(1 for lbl in detected_labels if lbl.startswith("front"))
-    if front_count > 1:
+    back_count = sum(1 for lbl in detected_labels if lbl.startswith("back"))
+    if front_count > 1 or ( back_count > 1):
         st.success(f"✅ ตรวจพบวัตถุด้านหน้า {front_count} ชิ้น")
 
         # --- API: ประเภทรถ
@@ -90,11 +91,15 @@ if "results" in st.session_state:
             selected_value = int(car_type_dict[selected_text])
            # st.write(f"คุณเลือก: {selected_text} (รหัส: {selected_value})")
 
-            # --- เงื่อนไขพิเศษเฉพาะบางประเภท
-            if selected_value == 12:
+            # --- เงื่อนไขพิเศษเฉพาะบางประเภท 
+            if selected_value == 12 and back_count >1:
                 custom_template_id = 124
-            elif selected_value == 19:
+            elif selected_value == 12 and front_count >1:
+                custom_template_id = 29
+            elif selected_value == 19 and back_count >1:
                 custom_template_id = 177
+            elif selected_value == 19 and front_count >1:
+                custom_template_id = 30
             else:
                 st.info("🚫 ยังไม่มีข้อมูลอะไหล่สำหรับประเภทรถนี้")
                 custom_template_id = None
