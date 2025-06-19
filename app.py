@@ -71,8 +71,8 @@ if "results" in st.session_state:
             cls_id = int(box.cls[0])
             label = result.names[cls_id]
             conf = float(box.conf[0])
-            st.write(f"🔍 {label} - ความมั่นใจ {conf * 100:.2f} %")
-            detected_labels.append(label)
+            description = explain_label(label)
+            st.write(f"🔍 {description} (ความมั่นใจ {conf*100:.1f}%)")
 
     # เช็ค front
     front_count = sum(1 for lbl in detected_labels if lbl.startswith("front"))
@@ -88,7 +88,7 @@ if "results" in st.session_state:
 
             selected_text = st.selectbox("เลือกประเภทรถ:", list(car_type_dict.keys()))
             selected_value = int(car_type_dict[selected_text])
-            st.write(f"คุณเลือก: {selected_text} (รหัส: {selected_value})")
+           # st.write(f"คุณเลือก: {selected_text} (รหัส: {selected_value})")
 
             # --- เงื่อนไขพิเศษเฉพาะบางประเภท
             if selected_value == 12:
@@ -121,3 +121,34 @@ if "results" in st.session_state:
             st.exception(e)
     else:
         st.info("⚠️ ไม่พบวัตถุด้านหน้า (front-x) มากพอ จึงยังไม่แสดงประเภทรถ")
+
+def explain_label(label):
+    parts = label.split("-")
+    if len(parts) == 2:
+        area, damage = parts
+    elif len(parts) == 3:
+        area = f"{parts[0]}-{parts[1]}"
+        damage = parts[2]
+    else:
+        return f"❓ ไม่สามารถแปลความหมายได้: {label}"
+
+    area_thai = {
+        "front": "ด้านหน้า",
+        "back": "ด้านหลัง",
+        "left": "ด้านซ้าย",
+        "right": "ด้านขวา",
+        "front-left": "ด้านหน้าซ้าย",
+        "front-right": "ด้านหน้าขวา",
+        "back-left": "ด้านหลังซ้าย",
+        "back-right": "ด้านหลังขวา",
+    }.get(area, area)
+
+    damage_thai = {
+        "0": "ไม่เสียหาย",
+        "1": "เสียหายเล็กน้อย",
+        "2": "เสียหายปานกลาง",
+        "3": "เสียหายรุนแรง",
+    }.get(damage, f"ระดับ {damage}")
+
+    return f"{area_thai} - {damage_thai}"
+
