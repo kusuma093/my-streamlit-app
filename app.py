@@ -6,7 +6,7 @@ import os
 import uuid
 import pandas as pd
 
-st.set_page_config(page_title="YOLO ตรวจจับภาพ", layout="centered")
+st.set_page_config(page_title="test ตรวจจับภาพ", layout="centered")
 st.title("🚘 ระบบตรวจจับภาพด้วย AI")
 # https://enterprise.garage-pro.net/Images/2024/06/71_1_506188_99_22062024165931.jpg
 # --- เลือกแหล่งภาพ
