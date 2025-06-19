@@ -71,7 +71,7 @@ if "results" in st.session_state:
             cls_id = int(box.cls[0])
             label = result.names[cls_id]
             conf = float(box.conf[0])
-            st.write(f"🔍 {label} - ความมั่นใจ {conf:.2f * 10} %")
+            st.write(f"🔍 {label} - ความมั่นใจ {conf * 100:.2f} %")
             detected_labels.append(label)
 
     # เช็ค front
