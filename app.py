@@ -112,8 +112,9 @@ if "results" in st.session_state:
     back_count = sum(1 for lbl in detected_labels if lbl.startswith("back"))
    
     # ตรวจว่ามี damage level 3 ใน front หรือ back หรือไม่
-    severe_damage_detected = any(lbl in ["front-3", "back-3"] for lbl in detected_labels)
-    if front_count > 1 or back_count > 1 or severe_damage_detected:
+    severe_damage_detected_front = any(lbl in ["front-3"] for lbl in detected_labels)
+    severe_damage_detected_back = any(lbl in ["back-3"] for lbl in detected_labels)
+    if front_count > 1 or back_count > 1 or severe_damage_detected_front or severe_damage_detected_back:
         #st.success(f"✅ ตรวจพบวัตถุด้านหน้า {front_count} และด้านหลัง {back_count}")
 
         # --- API: ประเภทรถ
@@ -127,13 +128,13 @@ if "results" in st.session_state:
             selected_value = int(car_type_dict[selected_text])
 
             # --- เงื่อนไขเฉพาะ
-            if selected_value == 12 and back_count > 1:
+            if selected_value == 12 and (back_count > 1 or severe_damage_detected_back):
                 custom_template_id = 124
-            elif selected_value == 12 and front_count > 1:
+            elif selected_value == 12 and (front_count > 1 or severe_damage_detected_front):
                 custom_template_id = 29
-            elif selected_value == 19 and back_count > 1:
+            elif selected_value == 19 and (back_count > 1 or severe_damage_detected_back):
                 custom_template_id = 177
-            elif selected_value == 19 and front_count > 1:
+            elif selected_value == 19 and (front_count > 1 or severe_damage_detected_front):
                 custom_template_id = 30
             else:
                 st.info("🚫 ยังไม่มีข้อมูลอะไหล่สำหรับประเภทรถนี้")
