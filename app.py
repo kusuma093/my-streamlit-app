@@ -7,7 +7,7 @@ import uuid
 import pandas as pd
 
 st.set_page_config(page_title="ตรวจจับภาพด้วย AI", layout="centered")
-st.title("🚘 ระบบตรวจจับภาพด้วย AI")
+st.title("🚘 ตรวจจับความเสียหายรถด้วย AI")
 
 # ✅ ฟังก์ชันแปลง label ให้อ่านง่าย
 def explain_label(label):
@@ -79,7 +79,7 @@ else:
     st.error("❌ ไม่พบโมเดล YOLO best.pt")
 
 # --- ปุ่มรัน AI
-if "image_path" in st.session_state and st.button("รัน AI ตรวจจับ"):
+if "image_path" in st.session_state :
     with st.spinner("⏳ กำลังประมวลผล..."):
         image_path = st.session_state["image_path"]
         results = model.predict(source=image_path, save=True, conf=0.25)
