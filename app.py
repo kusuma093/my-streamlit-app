@@ -128,14 +128,19 @@ if "results" in st.session_state:
             selected_value = int(car_type_dict[selected_text])
 
             # --- เงื่อนไขเฉพาะ
+            name = ""
             if selected_value == 12 and (back_count > 1 or severe_damage_detected_back):
                 custom_template_id = 124
+                name = "ชนท้ายเต็ม"
             elif selected_value == 12 and (front_count > 1 or severe_damage_detected_front):
                 custom_template_id = 29
+                name = "ชนหน้าเต็ม"
             elif selected_value == 19 and (back_count > 1 or severe_damage_detected_back):
                 custom_template_id = 177
+                name = "ชนท้ายเต็ม"
             elif selected_value == 19 and (front_count > 1 or severe_damage_detected_front):
                 custom_template_id = 30
+                name = "ชนหน้าเต็ม"
             else:
                 st.info("🚫 ยังไม่มีข้อมูลอะไหล่สำหรับประเภทรถนี้")
                 custom_template_id = None
@@ -151,8 +156,8 @@ if "results" in st.session_state:
                     gps_data = gps_response.json()
                     if isinstance(gps_data, list) and len(gps_data) > 0:
                         df = pd.DataFrame(gps_data)
-                        st.subheader("📋 รายการอะไหล่ (จาก GPS Code)")
-                        st.dataframe(df[["GPSCode", "GPSName", "GPSSpecial", "GPSPositionId"]])
+                        st.subheader("📋 รายการอะไหล่ (จาก GPS Code) {name}")
+                        st.dataframe(df[["GPSCode", "GPSName", "GPSSpecial"]])
                     else:
                         st.warning("ไม่พบรายการอะไหล่สำหรับประเภทนี้")
                 else:
