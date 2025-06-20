@@ -110,7 +110,10 @@ if "results" in st.session_state:
     # เช็ค front / back
     front_count = sum(1 for lbl in detected_labels if lbl.startswith("front"))
     back_count = sum(1 for lbl in detected_labels if lbl.startswith("back"))
-    if front_count > 1 or back_count > 1:
+   
+    # ตรวจว่ามี damage level 3 ใน front หรือ back หรือไม่
+    severe_damage_detected = any(lbl in ["front-3", "back-3"] for lbl in detected_labels)
+    if front_count > 1 or back_count > 1 or severe_damage_detected:
         #st.success(f"✅ ตรวจพบวัตถุด้านหน้า {front_count} และด้านหลัง {back_count}")
 
         # --- API: ประเภทรถ
