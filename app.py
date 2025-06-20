@@ -111,7 +111,7 @@ if "results" in st.session_state:
     front_count = sum(1 for lbl in detected_labels if lbl.startswith("front"))
     back_count = sum(1 for lbl in detected_labels if lbl.startswith("back"))
     if front_count > 1 or back_count > 1:
-        st.success(f"✅ ตรวจพบวัตถุด้านหน้า {front_count} และด้านหลัง {back_count}")
+        #st.success(f"✅ ตรวจพบวัตถุด้านหน้า {front_count} และด้านหลัง {back_count}")
 
         # --- API: ประเภทรถ
         car_type_api = "https://express.garage-pro.net/MobileService/GetCarTypes"
