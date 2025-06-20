@@ -156,7 +156,7 @@ if "results" in st.session_state:
                     gps_data = gps_response.json()
                     if isinstance(gps_data, list) and len(gps_data) > 0:
                         df = pd.DataFrame(gps_data)
-                        st.subheader("📋 รายการอะไหล่ (จาก GPS Code) {name}")
+                        st.subheader(f"📋 รายการอะไหล่ (จาก GPS Code) {name}")
                         st.dataframe(df[["GPSCode", "GPSName", "GPSSpecial"]])
                     else:
                         st.warning("ไม่พบรายการอะไหล่สำหรับประเภทนี้")
